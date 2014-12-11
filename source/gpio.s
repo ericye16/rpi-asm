@@ -1,7 +1,21 @@
+@# char* GetGpioAddress() { return 0x20200000; }
 .globl GetGpioAddress
 GetGpioAddress:
         ldr r0,=0x20200000
         mov pc,lr
+@# void SetGpioFunction(int pinNo, int instr) {
+@#     if (pinNo > 53 || instr > 7) return;
+@#     char *gAddress = GetGpioAddress(); // memory addresses are char*
+@#     while (pinNo > 9) {
+@#         pinNo -= 10;
+@#         gAddress += 4;
+@#     }
+@#     pinNo *= 3;
+@#     instr <<= pinNo;
+@#     *gAddress = instr;
+@#     return;
+#@ }
+
 .globl SetGpioFunction
 SetGpioFunction:
         cmp r0,#53 @ pin number <= 53?

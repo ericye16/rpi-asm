@@ -41,6 +41,7 @@ SetGpio:
     cmp pinNum, #53
     movhi pc,lr
     push {lr}
+    mov r2,pinNum
     .unreq pinNum
     pinNum .req r2
     bl GetGpioAddress

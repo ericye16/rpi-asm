@@ -3,6 +3,7 @@
 GetGpioAddress:
     ldr r0,=0x20200000
     mov pc,lr
+
 @# void SetGpioFunction(int pinNo, int instr) {
 @#     if (pinNo > 53 || instr > 7) return;
 @#     char *gAddress = GetGpioAddress(); // memory addresses are char*
@@ -15,7 +16,6 @@ GetGpioAddress:
 @#     *gAddress = instr;
 @#     return;
 #@ }
-
 .globl SetGpioFunction
 SetGpioFunction:
     cmp r0,#53 @ pin number <= 53?
@@ -34,6 +34,19 @@ functionLoop$:
     str r1,[r0]
     pop {pc}
 
+@# void SetGpio(int pinNum, int pinVal) {
+@#     if (pinNum > 53) return;
+@#     char *gpioAddr = GetGpioAddress();
+@#     int pinBank = pinNum >> 5;
+@#     pinBank <<= 2;
+@#     gpioAddr &= pinBank;
+@#     pinNum &= 31;
+@#     int setBit = 1;
+@#     setBit <<= pinNum;
+@#     if (pinVal == 0) *(gpioAddr + 40) = setBit;
+@#     else *(gpioAddr + 28) = setBit;
+@#     return;
+@# }
 .globl SetGpio
 SetGpio:
     pinNum .req r0

@@ -5,7 +5,9 @@ _start:
 
 .section .text
 main:
+    @# stack starts at 0x8000 and goes down
     mov sp,#0x8000
+    @# SetGpioFunction(16,1);
     pinNum .req r0
     pinFunc .req r1
     mov pinNum,#16
@@ -14,6 +16,7 @@ main:
     .unreq pinNum
     .unreq pinFunc
     
+    @# SetGpio(16,0);
     pinNum .req r0
     pinVal .req r1
     mov pinNum,#16

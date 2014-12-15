@@ -1,4 +1,12 @@
-@# waitUSec(int t); // wait for t microseconds
+@# void waitUSec(int t){ // wait for t microseconds
+@#     char *timerAddr = 0x20003000;
+@#     int tCurrent = *(timerAddr + 4);
+@#     t += tCurrent;
+@#     while (tCurrent != t) {
+@#         tCurrent = *(timerAddr + 4);
+@#     }
+@#     return;
+@# }
 .globl waitUSec
 waitUSec:
     t .req r0

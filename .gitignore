@@ -2,3 +2,6 @@ build
 kernel.img
 kernel.list
 kernel.map
+*.pdf
+a.out
+*.swp
